@@ -1,27 +1,35 @@
 package com.devsuperior.myfirstproject.entities;
 
+import jakarta.persistence.*;
+import jakarta.persistence.Id;  // ✅ CORRETO
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public final class Product implements Serializable {
 
     private static final long serialVersionUID=1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double price;
 
-    private Category categoy;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Product(){
 
     }
 
-    public Product(Long id, String name, Double price, Category categoy) {
+    public Product(Long id, String name, Double price, Category category) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.categoy = categoy;
+        this.category = category;
     }
 
     public Long getId() {
@@ -49,11 +57,11 @@ public final class Product implements Serializable {
     }
 
     public Category getCategoy() {
-        return categoy;
+        return category;
     }
 
     public void setCategoy(Category categoy) {
-        this.categoy = categoy;
+        this.category = categoy;
     }
 
     @Override

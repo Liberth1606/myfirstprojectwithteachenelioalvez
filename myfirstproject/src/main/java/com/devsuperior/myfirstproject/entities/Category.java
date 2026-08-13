@@ -1,23 +1,35 @@
 package com.devsuperior.myfirstproject.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Id;  // ✅ CORRETO
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Category implements Serializable {
 
     private static final long serialVersionUID=1L;
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
     @JsonIgnore
+    @OneToMany(mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 
 
+    public Category() {
+
+    }
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
